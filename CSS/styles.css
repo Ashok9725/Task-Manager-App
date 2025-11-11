@@ -1,0 +1,64 @@
+body {
+  background: linear-gradient(135deg, #3695f4, #392bfc);
+  font-family: "Poppins", sans-serif;
+}
+h1 {
+    font-weight: bold;
+    color: #ffffff;
+}
+.text-muted {
+    color: #000000 !important;
+}
+
+.card {
+  border-radius: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
+}
+
+.list-group-item:hover {
+  background: #f8f9fa;
+  border: solid;
+}
+
+.btn-group .btn {
+  margin-left: 5px;
+  transition: transform 0.2s ease;
+}
+
+.btn-group .btn:hover {
+  transform: scale(1.1);
+}
+
+h5 {
+  font-weight: 600;
+}
+
+.task-details.completed h5,
+.task-details.completed p {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.task-details {
+  flex-grow: 1;
+}
+
+input.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.form-check-input {
+  width: 1.25em;
+  height: 1.25em;
+  cursor: pointer;
+}

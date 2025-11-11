@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="taskApp">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task Manager</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular-animate.min.js"></script>
+</head>
+<body ng-controller="TaskController as tc">
+  <div class="container py-4">
+    <header class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3"><i class="bi bi-list-task me-2"></i>Task Manager</h1>
+      <small class="text-muted">AngularJS app</small>
+    </header>
+
+    <!-- Add Task Form -->
+    <div class="card mb-4 shadow-sm fade-in">
+      <div class="card-body">
+        <form name="taskForm" ng-submit="tc.addTask()" novalidate>
+          <div class="row g-2 align-items-end">
+            <div class="col-md-5">
+              <label class="form-label">Title</label>
+              <input type="text" class="form-control" ng-model="tc.newTask.title" required placeholder="Task title">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label">Description</label>
+              <input type="text" class="form-control" ng-model="tc.newTask.description" placeholder="Short description">
+            </div>
+            <div class="col-md-2 d-grid">
+              <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-card-checklist me-1"></i>Tasks <small class="text-muted">({{tc.tasks.length}})</small></h5>
+
+        <div ng-if="!tc.tasks.length" class="text-muted">No tasks yet. Add one above!</div>
+
+        <ul class="list-group mt-3">
+          <li class="list-group-item d-flex gap-3 align-items-start animate-repeat" ng-repeat="task in tc.tasks track by task.id">
+
+            <div class="form-check me-2">
+              <input class="form-check-input" type="checkbox" ng-model="task.completed" ng-change="tc.toggleComplete(task)">
+            </div>
+
+            <div class="flex-grow-1">
+              <!-- View mode -->
+              <div ng-if="!task.editing">
+                <h6 ng-class="{ 'completed': task.completed }">{{task.title}}</h6>
+                <p class="mb-1 text-muted small" ng-class="{ 'completed': task.completed }">{{task.description}}</p>
+                <div class="small text-muted">Created: {{task.created | date:'medium'}}</div>
+              </div>
+
+              <!-- Edit mode -->
+              <div ng-if="task.editing">
+                <input type="text" class="form-control mb-2" ng-model="task._editTitle" placeholder="Edit title">
+                <input type="text" class="form-control mb-2" ng-model="task._editDescription" placeholder="Edit description">
+              </div>
+            </div>
+
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-outline-secondary" ng-if="!task.editing" ng-click="tc.startEdit(task)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-success" ng-if="task.editing" ng-click="tc.saveEdit(task)"><i class="bi bi-check-circle"></i></button>
+              <button class="btn btn-secondary" ng-if="task.editing" ng-click="tc.cancelEdit(task)"><i class="bi bi-x-circle"></i></button>
+              <button class="btn btn-danger" ng-click="tc.deleteTask(task)"><i class="bi bi-trash"></i></button>
+            </div>
+
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+    <footer class="mt-4 text-center text-muted small"><i class="bi bi-info-circle"></i> Tasks are stored in your browser's localStorage.</footer>
+  </div>
+
+  <!-- App JS -->
+  <script src="js/app.js"></script>
+</body>
+</html>
